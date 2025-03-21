@@ -1,5 +1,5 @@
 # 마법의 소라고동 🐚
-# The Magic Conch + Chat GPT 🤖
+## The Magic Conch + Chat GPT 🤖
 
 | ![Image1](https://github.com/user-attachments/assets/dfc8c8d4-f3f7-4f1e-a8b3-d146b2f883ba) | ![Image2](https://github.com/user-attachments/assets/875650c4-875a-45a3-86ca-ca38f66eb516) |
 | --- | --- |
