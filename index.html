@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🤖 마법의 소라PT 🐚</title>
+</head>
+<body style="padding-top: 100px;
+            padding-bottom: 60px">
+  <h1 style="position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: rgba(0, 70, 55, 0.651);
+        color: white;
+        padding: 16px;
+        margin: 0;
+        text-align: center;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        z-index: 1000;">🤖 마법의 소라고동 🐚</h1>
+
+  <img src="asset/magic.png" width="300" style="display: block; margin: 0 auto;" /><br>
+  <br>
+  
+  <label style="display: block; margin-left: 10%; margin-bottom: 10px;">
+    OpenAI API 키:
+    <input type="password" id="apiKey" placeholder="sk-... 로 시작하는 OpenAI API키가 필요해" 
+           style="width: 300px; font-size: 15px; " />
+</label><br><br>
+
+
+
+  <label style="display: block; margin-left: 10%; margin-bottom: 10px;">
+    무엇이든 물어봐 ~ :
+    <input type="text" id="userInput" placeholder="마법의 소라PT에게 물어볼 내용이 뭔가요?"
+    style="width: 300px; font-size: 15px; " />
+  </label><br><br>
+
+  <div style="text-align: center;">
+    <button id="callGPT">나에게 답을 줘 ~ 🙏</button>
+  </div>
+  <br>
+
+  <h2 style="display: block; margin-left: 10%; margin-bottom: 10px;">
+    그 조개의 조언 .. 🧙‍♂️:</h2>
+  <pre id="result" style="white-space: pre-wrap;
+                            background-color: papayawhip;
+                            padding: 16px;
+                            border-radius: 8px;
+                            max-width: 80%;
+                            min-width: 300px;
+                            margin: 16px auto;"></pre>
+
+
+
+    <h4 style="display: block; margin-left: 10%; margin-bottom: 10px;">
+        소라PT는 피드백이 필요해 🧙‍♂️:</h4>
+    <div id="feedbackButtons" style="margin-top: 10px; text-align: center;">
+    <button id="likeButton" style="padding: 8px 16px; margin-right: 10px;">👍 만족해요</button>
+    <button id="dislikeButton" style="padding: 8px 16px;">👎 마음에 안들어요</button>
+    </div>
+
+
+    
+    <div id="feedbackMessage" style="white-space: pre-wrap;
+                                 background-color: #f0f8ff;
+                                 padding: 12px;
+                                 border-radius: 8px;
+                                 max-width: 80%;
+                                 min-width: 300px;
+                                 margin: 16px auto;
+                                 border: 1px solid #ccc;
+                                 text-align: center;
+                                 font-weight: bold;
+                                 color: #444;"></div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          document.getElementById('callGPT').addEventListener('click', () => {
+            const apiKey = document.getElementById('apiKey').value.trim();
+            const userMessage = document.getElementById('userInput').value.trim();
+            
+            if (!apiKey) {
+              alert('API 키를 입력해주세요.');
+              return;
+            }
+            if (!userMessage) {
+              alert('질문을 입력해주세요.');
+              return;
+            }
+      
+            fetch('https://api.openai.com/v1/chat/completions', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${apiKey}`
+              },
+              body: JSON.stringify({
+                model: 'gpt-4o-mini',
+                messages: [{ role: 'user', content: userMessage }],
+                temperature: 0.7
+              })
+            })
+            .then(response => response.json())
+            .then(data => {
+              if (data.choices && data.choices.length > 0) {
+                document.getElementById('result').textContent = data.choices[0].message.content;
+              } else {
+                document.getElementById('result').textContent = '응답이 없거나 오류가 발생했습니다.';
+              }
+            })
+            .catch(error => {
+              console.error('에러 발생:', error);
+              document.getElementById('result').textContent = '에러 발생: ' + error.message;
+            });
+          });
+      
+            document.getElementById('likeButton').addEventListener('click', () => {
+            document.getElementById('feedbackMessage').innerText = '마법의 소라PT가 기뻐하고 있어요! 🐚✨';
+            });
+
+            document.getElementById('dislikeButton').addEventListener('click', () => {
+            document.getElementById('feedbackMessage').innerText = '마법의 소라고동: 더 분발할게요! 🐚😢';
+            });
+
+        });
+      </script>
+      
+      <footer style="position: fixed;
+               bottom: 0;
+               left: 0;
+               width: 100%;
+               background-color: rgba(0, 70, 55, 0.85);
+               color: white;
+               text-align: center;
+               padding: 10px 0;
+               font-size: 14px;
+               box-shadow: 0 -2px 5px rgba(0,0,0,0.1);">
+  🐚 마법의 소라고동 | 제작자: @weonyee ✨
+</footer>
+    
+      
+</body>
+</html>
